@@ -1,0 +1,4 @@
+#Sun Jan 08 14:35:23 CET 2023
+base.0=D\:\\DEVOPS\\projets\\flutter\\projet_flutter\\movie_db\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
