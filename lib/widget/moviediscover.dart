@@ -45,8 +45,8 @@ class LoadingBody extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => DescriptionMovie(
-                                        movieDetail: movies[index],
+                                      builder: (context) => MovieDetailScreen(
+                                        movie: movies[index],
                                       ),
                                     ),
                                   );

@@ -1,23 +1,23 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_db/bloc/movie_detail_bloc/movie_detail_state.dart';
 import 'package:movie_db/model/cast_list.dart';
 import 'package:movie_db/model/movie.dart';
 import 'package:movie_db/model/movie_detail.dart';
+import 'package:movie_db/model/screen_shot.dart';
 import 'package:movie_db/service/api_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../bloc/movie_detail_bloc/movie_detail_bloc.dart';
 import '../bloc/movie_detail_bloc/movie_detail_event.dart';
-import '../model/screen_shot.dart';
+import '../bloc/movie_detail_bloc/movie_detail_state.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   final Movie movie;
 
-  const MovieDetailScreen({
-    super.key,
-    required this.movie,
-  });
+  const MovieDetailScreen({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +39,12 @@ class MovieDetailScreen extends StatelessWidget {
     return BlocBuilder<MovieDetailBloc, MovieDetailState>(
       builder: (context, state) {
         if (state is MovieDetailLoadingState) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         } else if (state is MovieDetailLoadedState) {
           MovieDetail movieDetail = state.detail;
+          print(movieDetail);
           return Stack(
             children: <Widget>[
               ClipPath(
@@ -52,12 +55,11 @@ class MovieDetailScreen extends StatelessWidget {
                     height: MediaQuery.of(context).size.height / 2,
                     width: double.infinity,
                     fit: BoxFit.cover,
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
+                    placeholder: (context, url) => CircularProgressIndicator(),
                     errorWidget: (context, url, error) => Container(
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage('assets/images/not_found.png'),
+                          image: AssetImage('assets/images/img_not_found.jpg'),
                         ),
                       ),
                     ),
@@ -76,14 +78,16 @@ class MovieDetailScreen extends StatelessWidget {
                     elevation: 0,
                   ),
                   Container(
-                    padding: EdgeInsets.only(top: 120),
+                    padding: const EdgeInsets.only(top: 120),
                     child: GestureDetector(
                       onTap: () async {
-                        // final youtubeUrl =
-                        //     'https://www.youtube.com/embed/${movieDetail.trailerId}';
-                        // if (await canLaunch(youtubeUrl)) {
-                        //   await launch(youtubeUrl);
-                        // }
+                        final youtubeUrl =
+                            'https://www.youtube.com/embed/${movieDetail.trailerId}';
+                        // ignore: deprecated_member_use
+                        if (await canLaunch(youtubeUrl)) {
+                          // ignore: deprecated_member_use
+                          await launch(youtubeUrl);
+                        }
                       },
                       child: Center(
                         child: Column(
@@ -136,7 +140,7 @@ class MovieDetailScreen extends StatelessWidget {
                         const SizedBox(
                           height: 5,
                         ),
-                        SizedBox(
+                        Container(
                           height: 35,
                           child: Text(
                             movieDetail.overview,
@@ -184,8 +188,8 @@ class MovieDetailScreen extends StatelessWidget {
                                   'run time'.toUpperCase(),
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption
-                                      ?.copyWith(
+                                      .caption!
+                                      .copyWith(
                                         fontWeight: FontWeight.bold,
                                         fontFamily: 'muli',
                                       ),
@@ -194,8 +198,8 @@ class MovieDetailScreen extends StatelessWidget {
                                   movieDetail.runtime,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .subtitle2
-                                      ?.copyWith(
+                                      .subtitle2!
+                                      .copyWith(
                                         color: Colors.yellow[800],
                                         fontSize: 12,
                                         fontFamily: 'muli',
@@ -231,7 +235,7 @@ class MovieDetailScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
@@ -245,7 +249,7 @@ class MovieDetailScreen extends StatelessWidget {
                           height: 155,
                           child: ListView.separated(
                             separatorBuilder: (context, index) =>
-                                const VerticalDivider(
+                                VerticalDivider(
                               color: Colors.transparent,
                               width: 5,
                             ),
@@ -264,8 +268,7 @@ class MovieDetailScreen extends StatelessWidget {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
                                     child: CachedNetworkImage(
-                                      placeholder: (context, url) =>
-                                          const Center(
+                                      placeholder: (context, url) => Center(
                                         child: CircularProgressIndicator(),
                                       ),
                                       imageUrl:
@@ -278,7 +281,7 @@ class MovieDetailScreen extends StatelessWidget {
                             },
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        SizedBox(height: 10),
                         Text(
                           'Casts'.toUpperCase(),
                           style: Theme.of(context).textTheme.caption?.copyWith(
@@ -286,99 +289,99 @@ class MovieDetailScreen extends StatelessWidget {
                                 fontFamily: 'muli',
                               ),
                         ),
-                        Container(
-                          height: 110,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            separatorBuilder: (context, index) =>
-                                VerticalDivider(
-                              color: Colors.transparent,
-                              width: 5,
-                            ),
-                            itemCount: movieDetail.castList.length,
-                            itemBuilder: (context, index) {
-                              Cast cast = movieDetail.castList[index];
-                              return Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                      ),
-                                      elevation: 3,
-                                      child: ClipRRect(
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              'https://image.tmdb.org/t/p/w200${cast.profilePath}',
-                                          imageBuilder:
-                                              (context, imageBuilder) {
-                                            return Container(
-                                              width: 80,
-                                              height: 80,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(100)),
-                                                image: DecorationImage(
-                                                  image: imageBuilder,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          placeholder: (context, url) =>
-                                              Container(
-                                            width: 80,
-                                            height: 80,
-                                            child: Center(
-                                              child:
-                                                  CircularProgressIndicator(),
-                                            ),
-                                          ),
-                                          errorWidget: (context, url, error) =>
-                                              Container(
-                                            width: 80,
-                                            height: 80,
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/images/not_found.png'),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Center(
-                                        child: Text(
-                                          cast.name.toUpperCase(),
-                                          style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 8,
-                                            fontFamily: 'muli',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Center(
-                                        child: Text(
-                                          cast.character.toUpperCase(),
-                                          style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 8,
-                                            fontFamily: 'muli',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ),
+                        // Container(
+                        //   height: 110,
+                        //   child: ListView.separated(
+                        //     scrollDirection: Axis.horizontal,
+                        //     separatorBuilder: (context, index) =>
+                        //         VerticalDivider(
+                        //       color: Colors.transparent,
+                        //       width: 5,
+                        //     ),
+                        //     itemCount: movieDetail.castList.length,
+                        //     itemBuilder: (context, index) {
+                        //       Cast cast = movieDetail.castList[index];
+                        //       return Container(
+                        //         child: Column(
+                        //           children: <Widget>[
+                        //             Card(
+                        //               shape: RoundedRectangleBorder(
+                        //                 borderRadius:
+                        //                     BorderRadius.circular(100),
+                        //               ),
+                        //               elevation: 3,
+                        //               child: ClipRRect(
+                        //                 child: CachedNetworkImage(
+                        //                   imageUrl:
+                        //                       'https://image.tmdb.org/t/p/w200${cast.profilePath}',
+                        //                   imageBuilder:
+                        //                       (context, imageBuilder) {
+                        //                     return Container(
+                        //                       width: 80,
+                        //                       height: 80,
+                        //                       decoration: BoxDecoration(
+                        //                         borderRadius: BorderRadius.all(
+                        //                             Radius.circular(100)),
+                        //                         image: DecorationImage(
+                        //                           image: imageBuilder,
+                        //                           fit: BoxFit.cover,
+                        //                         ),
+                        //                       ),
+                        //                     );
+                        //                   },
+                        //                   placeholder: (context, url) =>
+                        //                       Container(
+                        //                     width: 80,
+                        //                     height: 80,
+                        //                     child: Center(
+                        //                       child:
+                        //                           CircularProgressIndicator(),
+                        //                     ),
+                        //                   ),
+                        //                   errorWidget: (context, url, error) =>
+                        //                       Container(
+                        //                     width: 80,
+                        //                     height: 80,
+                        //                     decoration: BoxDecoration(
+                        //                       image: DecorationImage(
+                        //                         image: AssetImage(
+                        //                             'assets/images/img_not_found.jpg'),
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Container(
+                        //               child: Center(
+                        //                 child: Text(
+                        //                   cast.name.toUpperCase(),
+                        //                   style: TextStyle(
+                        //                     color: Colors.black54,
+                        //                     fontSize: 8,
+                        //                     fontFamily: 'muli',
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Container(
+                        //               child: Center(
+                        //                 child: Text(
+                        //                   cast.character.toUpperCase(),
+                        //                   style: TextStyle(
+                        //                     color: Colors.black54,
+                        //                     fontSize: 8,
+                        //                     fontFamily: 'muli',
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       );
+                        //     },
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

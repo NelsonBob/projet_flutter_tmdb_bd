@@ -6,7 +6,7 @@ class Screenshot extends Equatable {
   final int height;
   final int width;
   final String countryCode;
-  final double voteAverage;
+  final String voteAverage;
   final int voteCount;
 
   const Screenshot(
@@ -20,13 +20,13 @@ class Screenshot extends Equatable {
 
   factory Screenshot.fromJson(Map<String, dynamic> json) {
     return Screenshot(
-        aspect: json['aspect_ratio'].toString(),
-        imagePath: json['file_path'],
-        height: json['height'],
-        width: json['width'],
-        countryCode: json['iso_639_1'],
-        voteAverage: json['vote_average'],
-        voteCount: json['vote_count']);
+        aspect: json['aspect_ratio'].toString() ?? "yo",
+        imagePath: json['file_path'] ?? "yo",
+        height: json['height'] ?? 3,
+        width: json['width'] ?? 3,
+        countryCode: json['iso_639_1'] ?? "yo",
+        voteAverage: json['vote_average'].toString() ?? "yo",
+        voteCount: json['vote_count'] ?? "yo");
   }
 
   @override

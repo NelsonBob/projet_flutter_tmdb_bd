@@ -18,7 +18,7 @@ class MovieDetail {
 
   late MovieImage movieImage;
 
-  late List<Cast> castList;
+  // late List<Cast> castList;
 
   MovieDetail({
     required this.id,
@@ -36,16 +36,16 @@ class MovieDetail {
 
   factory MovieDetail.fromJson(dynamic json) {
     return MovieDetail(
-        id: json['id'].toString(),
-        title: json['title'],
-        backdropPath: json['backdrop_path'],
-        budget: json['budget'].toString(),
-        homePage: json['home_page'],
-        originalTitle: json['original_title'],
-        overview: json['overview'],
+        id: json['id'].toString() ?? "yo",
+        title: json['title'] ?? "yo",
+        backdropPath: json['backdrop_path'] ?? "yo",
+        budget: json['budget'].toString() ?? "yo",
+        homePage: json['home_page'] ?? "yo",
+        originalTitle: json['original_title'] ?? "yo",
+        overview: json['overview'] ?? "yo",
         releaseDate: json['release_date'] ?? "2022-03-03",
-        runtime: json['runtime'].toString(),
-        voteAverage: json['vote_average'].toString(),
-        voteCount: json['vote_count'].toString());
+        runtime: json['runtime'].toString() ?? "yo",
+        voteAverage: json['vote_average'].toString() ?? "yo",
+        voteCount: json['vote_count'].toString() ?? "yo");
   }
 }
