@@ -15,8 +15,6 @@ class GenreBloc extends Bloc<GenreEvent, GenreState> {
 
         emit(GenreLoadedState(genreList));
       } catch (e) {
-
-
         emit(GenreErrorState(e.toString()));
       }
     });

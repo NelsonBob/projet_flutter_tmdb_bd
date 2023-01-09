@@ -14,10 +14,11 @@ class GenreLoadingState extends GenreState {
 }
 
 class GenreLoadedState extends GenreState {
-  const GenreLoadedState(this.genre);
-  final List<Genre> genre;
+  final List<Genre> genreList;
+
+  const GenreLoadedState(this.genreList);
   @override
-  List<Object> get props => [];
+  List<Object> get props => [genreList];
 }
 
 //data error state

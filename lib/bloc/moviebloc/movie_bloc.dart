@@ -11,10 +11,15 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     on<LoadMovieEvent>((event, emit) async {
       emit(MovieLoadingState());
       try {
-        print("hello");
-        List<Movie> movieList = await service.getDiscoryMovie();
+        List<Movie> movies;
+        if (event.movieId == 0) {
+          movies = await service.getDiscoryMovie();
+        } else {
+          movies = await service.getMovieByGenre(event.movieId);
+          print(movies.length);
+        }
 
-        emit(MovieLoadedState(movieList));
+        emit(MovieLoadedState(movies));
       } catch (e) {
         emit(MovieErrorState(e.toString()));
       }

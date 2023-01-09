@@ -8,6 +8,9 @@ abstract class MovieEvent extends Equatable {
 
 //data loading state
 class LoadMovieEvent extends MovieEvent {
+  final int movieId;
+  final String query;
+  const LoadMovieEvent(this.movieId, this.query);
   @override
   List<Object> get props => [];
 }

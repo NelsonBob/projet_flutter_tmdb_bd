@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_db/bloc/moviebloc/movie_bloc.dart';
 import 'package:movie_db/bloc/moviebloc/movie_bloc_state.dart';
+import 'package:movie_db/bloc/person/person_bloc.dart';
+import 'package:movie_db/bloc/person/person_state.dart';
 import 'package:movie_db/model/movie.dart';
-import 'package:movie_db/widget/categorie.dart';
+import 'package:movie_db/model/person.dart';
+
+import 'categorie.dart';
 
 class LoadingBody extends StatelessWidget {
   const LoadingBody(BuildContext context, {super.key});
@@ -90,13 +94,160 @@ class LoadingBody extends StatelessWidget {
                               enlargeCenterPage: true,
                             ),
                           ),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 12,
                             ),
                             child: Column(
-                              children: const <Widget>[
-                                // CategoryMovie(),
+                              children: <Widget>[
+                                const CategoryMovie(),
+                                Text(
+                                  'Trending persons on this week'.toUpperCase(),
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black45,
+                                    fontFamily: 'muli',
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    BlocBuilder<PersonBloc, PersonState>(
+                                      builder: (context, state) {
+                                        if (state is PersonLoadingState) {
+                                          return const Center();
+                                        } else if (state is PersonLoadedState) {
+                                          List<Person> personList =
+                                              state.personList;
+                                          return Container(
+                                            height: 110,
+                                            child: ListView.separated(
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: personList.length,
+                                              separatorBuilder:
+                                                  (context, index) =>
+                                                      const VerticalDivider(
+                                                color: Colors.transparent,
+                                                width: 5,
+                                              ),
+                                              itemBuilder: (context, index) {
+                                                Person person =
+                                                    personList[index];
+                                                return Container(
+                                                  child: Column(
+                                                    children: <Widget>[
+                                                      Card(
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      100),
+                                                        ),
+                                                        elevation: 3,
+                                                        child: ClipRRect(
+                                                          child:
+                                                              CachedNetworkImage(
+                                                            imageUrl:
+                                                                'https://image.tmdb.org/t/p/w200${person.profilePath}',
+                                                            imageBuilder: (context,
+                                                                imageProvider) {
+                                                              return Container(
+                                                                width: 80,
+                                                                height: 80,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      const BorderRadius
+                                                                          .all(
+                                                                    Radius
+                                                                        .circular(
+                                                                            100),
+                                                                  ),
+                                                                  image:
+                                                                      DecorationImage(
+                                                                    image:
+                                                                        imageProvider,
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                            placeholder: (context,
+                                                                    url) =>
+                                                                const SizedBox(
+                                                              width: 80,
+                                                              height: 80,
+                                                              child: Center(
+                                                                child:
+                                                                    CircularProgressIndicator(),
+                                                              ),
+                                                            ),
+                                                            errorWidget:
+                                                                (context, url,
+                                                                        error) =>
+                                                                    Container(
+                                                              width: 80,
+                                                              height: 80,
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                image:
+                                                                    DecorationImage(
+                                                                  image: AssetImage(
+                                                                      'assets/images/not_found.png'),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Center(
+                                                        child: Text(
+                                                          person.name
+                                                              .toUpperCase(),
+                                                          style:
+                                                              const TextStyle(
+                                                            color:
+                                                                Colors.black45,
+                                                            fontSize: 8,
+                                                            fontFamily: 'muli',
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Center(
+                                                        child: Text(
+                                                          person
+                                                              .knowForDepartment
+                                                              .toUpperCase(),
+                                                          style:
+                                                              const TextStyle(
+                                                            color:
+                                                                Colors.black45,
+                                                            fontSize: 8,
+                                                            fontFamily: 'muli',
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        } else {
+                                          return Container();
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
                           ),
