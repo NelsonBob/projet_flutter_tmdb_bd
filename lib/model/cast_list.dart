@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class CastList {
-  final List<Cast>? cast;
+  final List<Cast> cast;
 
   CastList(this.cast);
 }
@@ -17,7 +17,7 @@ class Cast {
   factory Cast.fromJson(dynamic json) {
     return Cast(
         name: json['name'] ?? "yo",
-        profilePath: json['profile_path'] ?? "yo",
+        profilePath: json['profile_path'] ?? "",
         character: json['character'] ?? "yo");
   }
 }

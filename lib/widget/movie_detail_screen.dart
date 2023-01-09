@@ -246,10 +246,10 @@ class MovieDetailScreen extends StatelessWidget {
                               ),
                         ),
                         Container(
-                          height: 155,
+                          height: 80,
                           child: ListView.separated(
                             separatorBuilder: (context, index) =>
-                                VerticalDivider(
+                                const VerticalDivider(
                               color: Colors.transparent,
                               width: 5,
                             ),
@@ -258,30 +258,28 @@ class MovieDetailScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               Screenshot image =
                                   movieDetail.movieImage.backdrops[index];
-                              return Container(
-                                child: Card(
-                                  elevation: 3,
-                                  borderOnForeground: true,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: CachedNetworkImage(
-                                      placeholder: (context, url) => Center(
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                      imageUrl:
-                                          'https://image.tmdb.org/t/p/w500${image.imagePath}',
-                                      fit: BoxFit.cover,
+                              return Card(
+                                elevation: 3,
+                                borderOnForeground: true,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: CachedNetworkImage(
+                                    placeholder: (context, url) => const Center(
+                                      child: CircularProgressIndicator(),
                                     ),
+                                    imageUrl:
+                                        'https://image.tmdb.org/t/p/w500${image.imagePath}',
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               );
                             },
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           'Casts'.toUpperCase(),
                           style: Theme.of(context).textTheme.caption?.copyWith(
@@ -289,99 +287,110 @@ class MovieDetailScreen extends StatelessWidget {
                                 fontFamily: 'muli',
                               ),
                         ),
-                        // Container(
-                        //   height: 110,
-                        //   child: ListView.separated(
-                        //     scrollDirection: Axis.horizontal,
-                        //     separatorBuilder: (context, index) =>
-                        //         VerticalDivider(
-                        //       color: Colors.transparent,
-                        //       width: 5,
-                        //     ),
-                        //     itemCount: movieDetail.castList.length,
-                        //     itemBuilder: (context, index) {
-                        //       Cast cast = movieDetail.castList[index];
-                        //       return Container(
-                        //         child: Column(
-                        //           children: <Widget>[
-                        //             Card(
-                        //               shape: RoundedRectangleBorder(
-                        //                 borderRadius:
-                        //                     BorderRadius.circular(100),
-                        //               ),
-                        //               elevation: 3,
-                        //               child: ClipRRect(
-                        //                 child: CachedNetworkImage(
-                        //                   imageUrl:
-                        //                       'https://image.tmdb.org/t/p/w200${cast.profilePath}',
-                        //                   imageBuilder:
-                        //                       (context, imageBuilder) {
-                        //                     return Container(
-                        //                       width: 80,
-                        //                       height: 80,
-                        //                       decoration: BoxDecoration(
-                        //                         borderRadius: BorderRadius.all(
-                        //                             Radius.circular(100)),
-                        //                         image: DecorationImage(
-                        //                           image: imageBuilder,
-                        //                           fit: BoxFit.cover,
-                        //                         ),
-                        //                       ),
-                        //                     );
-                        //                   },
-                        //                   placeholder: (context, url) =>
-                        //                       Container(
-                        //                     width: 80,
-                        //                     height: 80,
-                        //                     child: Center(
-                        //                       child:
-                        //                           CircularProgressIndicator(),
-                        //                     ),
-                        //                   ),
-                        //                   errorWidget: (context, url, error) =>
-                        //                       Container(
-                        //                     width: 80,
-                        //                     height: 80,
-                        //                     decoration: BoxDecoration(
-                        //                       image: DecorationImage(
-                        //                         image: AssetImage(
-                        //                             'assets/images/img_not_found.jpg'),
-                        //                       ),
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //             Container(
-                        //               child: Center(
-                        //                 child: Text(
-                        //                   cast.name.toUpperCase(),
-                        //                   style: TextStyle(
-                        //                     color: Colors.black54,
-                        //                     fontSize: 8,
-                        //                     fontFamily: 'muli',
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //             Container(
-                        //               child: Center(
-                        //                 child: Text(
-                        //                   cast.character.toUpperCase(),
-                        //                   style: TextStyle(
-                        //                     color: Colors.black54,
-                        //                     fontSize: 8,
-                        //                     fontFamily: 'muli',
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       );
-                        //     },
-                        //   ),
-                        // ),
+                        Container(
+                          height: 110,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            separatorBuilder: (context, index) =>
+                                const VerticalDivider(
+                              color: Colors.transparent,
+                              width: 5,
+                            ),
+                            itemCount: movieDetail.castList.length,
+                            itemBuilder: (context, index) {
+                              Cast cast = movieDetail.castList[index];
+                              return Column(
+                                children: <Widget>[
+                                  Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                    elevation: 3,
+                                    child: ClipRRect(
+                                      child: cast.profilePath.isEmpty
+                                          ? Container(
+                                              width: 80,
+                                              height: 80,
+                                              decoration: const BoxDecoration(
+                                                image: DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/images/person_icon-icons.com_50075.png'),
+                                                ),
+                                              ),
+                                            )
+                                          : CachedNetworkImage(
+                                              imageUrl:
+                                                  'https://image.tmdb.org/t/p/w200${cast.profilePath}',
+                                              imageBuilder:
+                                                  (context, imageBuilder) {
+                                                return Container(
+                                                  width: 80,
+                                                  height: 80,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                            Radius.circular(
+                                                                100)),
+                                                    image: DecorationImage(
+                                                      image: imageBuilder,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              placeholder: (context, url) =>
+                                                  const SizedBox(
+                                                width: 80,
+                                                height: 80,
+                                                child: Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                ),
+                                              ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Container(
+                                                width: 80,
+                                                height: 80,
+                                                decoration: const BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: AssetImage(
+                                                        'assets/images/not_found.png'),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Center(
+                                      child: Text(
+                                        cast.name.toUpperCase(),
+                                        style: TextStyle(
+                                          color: Colors.black54,
+                                          fontSize: 8,
+                                          fontFamily: 'muli',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Center(
+                                      child: Text(
+                                        cast.character.toUpperCase(),
+                                        style: TextStyle(
+                                          color: Colors.black54,
+                                          fontSize: 8,
+                                          fontFamily: 'muli',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),

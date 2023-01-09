@@ -11,7 +11,6 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
       emit(MovieDetailLoadingState());
       try {
         final movieDetail = await service.getMovieDetail(event.id);
-        print(movieDetail.budget);
 
         emit(MovieDetailLoadedState(movieDetail));
       } catch (e) {

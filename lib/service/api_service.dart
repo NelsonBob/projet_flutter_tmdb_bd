@@ -67,8 +67,7 @@ class ApiService {
 
       movieDetail.movieImage = await getMovieImage(movieId);
 
-      // movieDetail.castList = await getCastList(movieId);
-      // print(movieDetail.castList);
+      movieDetail.castList = await getCastList(movieId);
       return movieDetail;
     } catch (error, stacktrace) {
       throw Exception(
@@ -103,14 +102,12 @@ class ApiService {
   Future<List<Cast>> getCastList(int movieId) async {
     try {
       final response = await _dio.get(
-          '${Environment.baseUrl}/movie/$movieId/credits?${Environment.apiKey}');
-      var list = response.data['cast'] as List;
-      List<Cast> castList = list
-          .map((c) => Cast(
-              name: c['name'],
-              profilePath: c['profile_path'],
-              character: c['character']))
-          .toList();
+          '${Environment.baseUrl}/movie/${movieId}/credits?${Environment.apiKey}');
+
+      var listCast = response.data['cast'] as List;
+      List<Cast> castList = listCast.map((p) => Cast.fromJson(p)).toList();
+      print(castList.length);
+
       return castList;
     } catch (error, stacktrace) {
       throw Exception(
