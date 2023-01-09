@@ -342,7 +342,7 @@ class MovieDetailScreen extends StatelessWidget {
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
                                                 image: AssetImage(
-                                                    'assets/images/img_not_found.jpg'),
+                                                    'assets/images/not_found.png'),
                                               ),
                                             ),
                                           ),

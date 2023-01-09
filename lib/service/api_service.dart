@@ -63,7 +63,7 @@ class ApiService {
       print(response.data);
       MovieDetail movieDetail = MovieDetail.fromJson(response.data);
 
-      movieDetail.trailerId = await getYoutubeId(movieId);
+      // movieDetail.trailerId = await getYoutubeId(movieId);
 
       movieDetail.movieImage = await getMovieImage(movieId);
 
@@ -76,17 +76,17 @@ class ApiService {
     }
   }
 
-  Future<String> getYoutubeId(int id) async {
-    try {
-      final response = await _dio
-          .get('${Environment.baseUrl}/movie/$id/videos?${Environment.apiKey}');
-      var youtubeId = response.data['results'][0]['key'];
-      return youtubeId;
-    } catch (error, stacktrace) {
-      throw Exception(
-          'Exception accoured: $error with stacktrace: $stacktrace');
-    }
-  }
+  // Future<String> getYoutubeId(int id) async {
+  //   try {
+  //     final response = await _dio
+  //         .get('${Environment.baseUrl}/movie/$id/videos?${Environment.apiKey}');
+  //     var youtubeId = response.data['results'][0]['key'];
+  //     return youtubeId;
+  //   } catch (error, stacktrace) {
+  //     throw Exception(
+  //         'Exception accoured: $error with stacktrace: $stacktrace');
+  //   }
+  // }
 
   Future<MovieImage> getMovieImage(int movieId) async {
     try {

@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_db/bloc/genre/genre_event.dart';
@@ -7,13 +6,11 @@ import 'package:movie_db/bloc/genre/genre_state.dart';
 import 'package:movie_db/bloc/moviebloc/movie_bloc.dart';
 import 'package:movie_db/bloc/moviebloc/movie_bloc_state.dart';
 import 'package:movie_db/model/genre.dart';
-import 'package:movie_db/widget/starwidget.dart';
-
+import 'package:movie_db/widget/description.dart';
 import '../bloc/genre/genre_bloc.dart';
 import '../bloc/moviebloc/movie_bloc_event.dart';
 import '../model/movie.dart';
 import '../service/api_service.dart';
-import 'movie_detail_screen.dart';
 
 class CategoryMovie extends StatefulWidget {
   final int selectedGenre;
@@ -39,7 +36,7 @@ class _CategoryMovieState extends State<CategoryMovie> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => MovieBloc(service)..add(LoadMovieEvent(0, '')),
+          create: (_) => MovieBloc(service)..add(const LoadMovieEvent(0, '')),
         ),
         BlocProvider(
           create: (_) => GenreBloc(service)..add(LoadGenreEvent()),
@@ -59,7 +56,7 @@ class _CategoryMovieState extends State<CategoryMovie> {
               return const Center(child: CircularProgressIndicator());
             } else if (state is GenreLoadedState) {
               List<Genre> genres = state.genreList;
-              return Container(
+              return SizedBox(
                 height: 45,
                 child: ListView.separated(
                   separatorBuilder: (BuildContext context, int index) =>
@@ -162,8 +159,8 @@ class _CategoryMovieState extends State<CategoryMovie> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => MovieDetailScreen(
-                                  movie: movieItem,
+                                builder: (context) => DescriptionMovie(
+                                  movieDetail: movieItem,
                                 ),
                               ),
                             );
@@ -200,7 +197,7 @@ class _CategoryMovieState extends State<CategoryMovie> {
                                 decoration: const BoxDecoration(
                                   image: DecorationImage(
                                     image: AssetImage(
-                                        'assets/images/img_not_found.jpg'),
+                                        'assets/images/not_found.png'),
                                   ),
                                 ),
                               ),
@@ -223,18 +220,6 @@ class _CategoryMovieState extends State<CategoryMovie> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Row(
-                          children: <Widget>[
-                            StarWidget(
-                                sizeStar: double.parse(movieItem.voteAverage)),
-                            Text(
-                              movieItem.voteAverage,
-                              style: const TextStyle(
-                                color: Colors.black45,
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     );
                   },
@@ -249,7 +234,6 @@ class _CategoryMovieState extends State<CategoryMovie> {
         const SizedBox(
           height: 10,
         ),
-        
       ],
     );
   }

@@ -14,11 +14,11 @@ class _StarWidgetState extends State<StarWidget> {
   Widget build(BuildContext context) {
     return RatingBar.builder(
       initialRating: widget.sizeStar,
-      itemSize: 15,
+      itemSize: 30,
       minRating: 1,
       direction: Axis.horizontal,
       allowHalfRating: true,
-      itemCount: 9,
+      itemCount: 10,
       itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
       itemBuilder: (context, _) => const Icon(
         Icons.star,

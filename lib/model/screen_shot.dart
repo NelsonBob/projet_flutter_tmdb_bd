@@ -9,7 +9,7 @@ class Screenshot extends Equatable {
   final double voteAverage;
   final int voteCount;
 
-  Screenshot(
+  const Screenshot(
       {required this.aspect,
       required this.imagePath,
       required this.height,

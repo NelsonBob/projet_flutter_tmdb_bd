@@ -8,6 +8,8 @@ import 'package:movie_db/bloc/person/person_bloc.dart';
 import 'package:movie_db/bloc/person/person_state.dart';
 import 'package:movie_db/model/movie.dart';
 import 'package:movie_db/model/person.dart';
+import 'package:movie_db/widget/description.dart';
+import 'package:movie_db/widget/movie_detail_screen.dart';
 
 import 'categorie.dart';
 
@@ -38,51 +40,64 @@ class LoadingBody extends StatelessWidget {
                             itemCount: movies.length,
                             itemBuilder: (BuildContext context, int index,
                                 int pageViewIndex) {
-                              return Stack(
-                                alignment: Alignment.bottomLeft,
-                                children: <Widget>[
-                                  ClipRRect(
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(10),
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DescriptionMovie(
+                                        movieDetail: movies[index],
+                                      ),
                                     ),
-                                    child: CachedNetworkImage(
-                                      imageUrl:
-                                          'https://image.tmdb.org/t/p/original/${movies[index].backdropPath}',
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              3,
-                                      width: MediaQuery.of(context).size.width,
-                                      fit: BoxFit.cover,
-                                      placeholder: (context, url) =>
-                                          const CircularProgressIndicator(),
-                                      errorWidget: (context, url, error) =>
-                                          Container(
-                                        decoration: const BoxDecoration(
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                                'assets/images/not_found.jpg'),
+                                  );
+                                },
+                                child: Stack(
+                                  alignment: Alignment.bottomLeft,
+                                  children: <Widget>[
+                                    ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            'https://image.tmdb.org/t/p/original/${movies[index].backdropPath}',
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                3,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) =>
+                                            const CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) =>
+                                            Container(
+                                          decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/images/not_found.jpg'),
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 15,
-                                      bottom: 15,
-                                    ),
-                                    child: Text(
-                                      movies[index].title.toUpperCase(),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                        fontFamily: 'muli',
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 15,
+                                        bottom: 15,
                                       ),
-                                      overflow: TextOverflow.ellipsis,
+                                      child: Text(
+                                        movies[index].title.toUpperCase(),
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
+                                          fontFamily: 'muli',
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               );
                             },
                             options: CarouselOptions(
