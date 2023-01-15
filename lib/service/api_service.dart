@@ -16,11 +16,14 @@ class ApiService {
       String url =
           '${Environment.baseUrl}/discover/movie?${Environment.apiKey}';
       final response = await _dio.get(url);
+      print(response.data['results']);
 
       var movies = response.data['results'] as List;
       List<Movie> movieList = movies.map((m) => Movie.fromJson(m)).toList();
+      print(movieList);
       return movieList;
     } catch (error, stacktrace) {
+      print(error);
       throw Exception(
           'Exception accoured: $error with stacktrace: $stacktrace');
     }

@@ -8,6 +8,7 @@ import 'package:movie_db/model/movie.dart';
 import 'package:movie_db/model/movie_detail.dart';
 import 'package:movie_db/model/screen_shot.dart';
 import 'package:movie_db/service/api_service.dart';
+import 'package:movie_db/widget/starwidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../bloc/movie_detail_bloc/movie_detail_bloc.dart';
@@ -44,7 +45,6 @@ class MovieDetailScreen extends StatelessWidget {
           );
         } else if (state is MovieDetailLoadedState) {
           MovieDetail movieDetail = state.detail;
-          print(movieDetail);
           return Stack(
             children: <Widget>[
               ClipPath(
@@ -52,7 +52,7 @@ class MovieDetailScreen extends StatelessWidget {
                   child: CachedNetworkImage(
                     imageUrl:
                         'https://image.tmdb.org/t/p/original/${movieDetail.backdropPath}',
-                    height: MediaQuery.of(context).size.height / 2,
+                    height: MediaQuery.of(context).size.height / 3,
                     width: double.infinity,
                     fit: BoxFit.cover,
                     placeholder: (context, url) => CircularProgressIndicator(),
@@ -78,7 +78,7 @@ class MovieDetailScreen extends StatelessWidget {
                     elevation: 0,
                   ),
                   Container(
-                    padding: const EdgeInsets.only(top: 120),
+                    padding: const EdgeInsets.only(top: 180),
                     child: GestureDetector(
                       onTap: () async {
                         final youtubeUrl =
@@ -113,7 +113,13 @@ class MovieDetailScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 160,
+                    height: 120,
+                  ),
+                  StarWidget(
+                    sizeStar: double.parse(movieDetail.voteAverage) / 2,
+                  ),
+                  const SizedBox(
+                    height: 5,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -246,7 +252,7 @@ class MovieDetailScreen extends StatelessWidget {
                               ),
                         ),
                         Container(
-                          height: 80,
+                          height: 120,
                           child: ListView.separated(
                             separatorBuilder: (context, index) =>
                                 const VerticalDivider(
@@ -287,14 +293,14 @@ class MovieDetailScreen extends StatelessWidget {
                                 fontFamily: 'muli',
                               ),
                         ),
-                        Container(
+                        SizedBox(
                           height: 110,
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
                             separatorBuilder: (context, index) =>
                                 const VerticalDivider(
                               color: Colors.transparent,
-                              width: 5,
+                              width: 6,
                             ),
                             itemCount: movieDetail.castList.length,
                             itemBuilder: (context, index) {

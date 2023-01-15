@@ -7,6 +7,7 @@ import 'package:movie_db/bloc/moviebloc/movie_bloc.dart';
 import 'package:movie_db/bloc/moviebloc/movie_bloc_state.dart';
 import 'package:movie_db/model/genre.dart';
 import 'package:movie_db/widget/description.dart';
+import 'package:movie_db/widget/movie_detail_screen.dart';
 import '../bloc/genre/genre_bloc.dart';
 import '../bloc/moviebloc/movie_bloc_event.dart';
 import '../model/movie.dart';
@@ -159,8 +160,8 @@ class _CategoryMovieState extends State<CategoryMovie> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DescriptionMovie(
-                                  movieDetail: movieItem,
+                                builder: (context) => MovieDetailScreen(
+                                  movie: movieItem,
                                 ),
                               ),
                             );
