@@ -36,16 +36,16 @@ class MovieDetail {
 
   factory MovieDetail.fromJson(dynamic json) {
     return MovieDetail(
-        id: json['id'].toString() ?? "yo",
-        title: json['title'] ?? "yo",
-        backdropPath: json['backdrop_path'] ?? "yo",
-        budget: json['budget'].toString() ?? "yo",
-        homePage: json['home_page'] ?? "yo",
-        originalTitle: json['original_title'] ?? "yo",
-        overview: json['overview'] ?? "yo",
+        id: json['id'].toString() ?? "loading",
+        title: json['title'] ?? "loading",
+        backdropPath: json['backdrop_path'] ?? "loading",
+        budget: json['budget'].toString() ?? "loading",
+        homePage: json['home_page'] ?? "loading",
+        originalTitle: json['original_title'] ?? "loading",
+        overview: json['overview'] ?? "loading",
         releaseDate: json['release_date'] ?? "2022-03-03",
-        runtime: json['runtime'].toString() ?? "yo",
-        voteAverage: json['vote_average'].toString() ?? "yo",
-        voteCount: json['vote_count'].toString() ?? "yo");
+        runtime: json['runtime'].toString() ?? "loading",
+        voteAverage: json['vote_average'].toString() ?? "loading",
+        voteCount: json['vote_count'].toString() ?? "loading");
   }
 }

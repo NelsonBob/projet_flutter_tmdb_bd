@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "979967478226",
+    "firebase_url": "https://moviedb-ceceb-default-rtdb.firebaseio.com",
+    "project_id": "moviedb-ceceb",
+    "storage_bucket": "moviedb-ceceb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979967478226:android:1b25b0cfb6ea224e93600b",
+        "android_client_info": {
+          "package_name": "com.example.movie_db"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "979967478226-76lfn048rrdiogch52givh4faslhr6ad.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDehX9VO52U5W9q0vxjOZr8SnTHumV7cC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "979967478226-76lfn048rrdiogch52givh4faslhr6ad.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

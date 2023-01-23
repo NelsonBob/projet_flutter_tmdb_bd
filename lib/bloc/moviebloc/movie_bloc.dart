@@ -16,7 +16,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
           movies = await service.getDiscoryMovie();
         } else {
           movies = await service.getMovieByGenre(event.movieId);
-          print(movies.length);
+          // print(movies.length);
         }
 
         emit(MovieLoadedState(movies));

@@ -46,6 +46,11 @@ dependencies:
   tmdb_api :
   flutter_rating_bar: ^4.0.1
   google_fonts:
+  firebase_core: ^2.4.1
+  firebase_auth: ^4.2.5
+  youtube_player_flutter: ^8.1.2
+  cloud_firestore: ^4.3.1
+  firebase_database: ^10.0.9
 
 
 

@@ -12,19 +12,19 @@
         "source": "D:\\DEVOPS\\projets\\flutter\\projet_flutter\\movie_db\\android\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "D:\\DEVOPS\\projets\\flutter\\projet_flutter\\movie_db\\build\\app\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "D:\\DEVOPS\\projets\\flutter\\projet_flutter\\movie_db\\android\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
-    },
-    {
         "merged": "D:\\DEVOPS\\projets\\flutter\\projet_flutter\\movie_db\\build\\app\\intermediates\\merged_res\\debug\\drawable-v21_launch_background.xml.flat",
         "source": "D:\\DEVOPS\\projets\\flutter\\projet_flutter\\movie_db\\android\\app\\src\\main\\res\\drawable-v21\\launch_background.xml"
     },
     {
-        "merged": "D:\\DEVOPS\\projets\\flutter\\projet_flutter\\movie_db\\build\\app\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "D:\\DEVOPS\\projets\\flutter\\projet_flutter\\movie_db\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+        "merged": "D:\\DEVOPS\\projets\\flutter\\projet_flutter\\movie_db\\build\\app\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "D:\\DEVOPS\\projets\\flutter\\projet_flutter\\movie_db\\android\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
     },
     {
         "merged": "D:\\DEVOPS\\projets\\flutter\\projet_flutter\\movie_db\\build\\app\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher.png.flat",
         "source": "D:\\DEVOPS\\projets\\flutter\\projet_flutter\\movie_db\\android\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\DEVOPS\\projets\\flutter\\projet_flutter\\movie_db\\build\\app\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "D:\\DEVOPS\\projets\\flutter\\projet_flutter\\movie_db\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
     }
 ]

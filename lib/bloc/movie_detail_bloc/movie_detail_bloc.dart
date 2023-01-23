@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_db/bloc/movie_detail_bloc/movie_detail_event.dart';
 import 'package:movie_db/bloc/movie_detail_bloc/movie_detail_state.dart';
 import '../../service/api_service.dart';
-
+ 
 class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
   final ApiService service;
 
