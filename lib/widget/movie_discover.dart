@@ -9,6 +9,7 @@ import 'package:movie_db/bloc/person/person_state.dart';
 import 'package:movie_db/model/movie.dart';
 import 'package:movie_db/model/person.dart';
 import 'package:movie_db/widget/movie_detail_screen.dart';
+import 'package:movie_db/widget/pop_up.dart';
 
 import 'categorie.dart';
 
@@ -153,105 +154,7 @@ class LoadingBody extends StatelessWidget {
                                               itemBuilder: (context, index) {
                                                 Person person =
                                                     personList[index];
-                                                return Container(
-                                                  child: Column(
-                                                    children: <Widget>[
-                                                      Card(
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      100),
-                                                        ),
-                                                        elevation: 3,
-                                                        child: ClipRRect(
-                                                          child:
-                                                              CachedNetworkImage(
-                                                            imageUrl:
-                                                                'https://image.tmdb.org/t/p/w200${person.profilePath}',
-                                                            imageBuilder: (context,
-                                                                imageProvider) {
-                                                              return Container(
-                                                                width: 80,
-                                                                height: 80,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  borderRadius:
-                                                                      const BorderRadius
-                                                                          .all(
-                                                                    Radius
-                                                                        .circular(
-                                                                            100),
-                                                                  ),
-                                                                  image:
-                                                                      DecorationImage(
-                                                                    image:
-                                                                        imageProvider,
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                            placeholder: (context,
-                                                                    url) =>
-                                                                const SizedBox(
-                                                              width: 80,
-                                                              height: 80,
-                                                              child: Center(
-                                                                child:
-                                                                    CircularProgressIndicator(),
-                                                              ),
-                                                            ),
-                                                            errorWidget:
-                                                                (context, url,
-                                                                        error) =>
-                                                                    Container(
-                                                              width: 80,
-                                                              height: 80,
-                                                              decoration:
-                                                                  const BoxDecoration(
-                                                                image:
-                                                                    DecorationImage(
-                                                                  image: AssetImage(
-                                                                      'assets/images/not_found.png'),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Center(
-                                                        child: Text(
-                                                          person.name
-                                                              .toUpperCase(),
-                                                          style:
-                                                              const TextStyle(
-                                                            color:
-                                                                Colors.black45,
-                                                            fontSize: 8,
-                                                            fontFamily: 'muli',
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Center(
-                                                        child: Text(
-                                                          person
-                                                              .knowForDepartment
-                                                              .toUpperCase(),
-                                                          style:
-                                                              const TextStyle(
-                                                            color:
-                                                                Colors.black45,
-                                                            fontSize: 8,
-                                                            fontFamily: 'muli',
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
+                                              
                                               },
                                             ),
                                           );
@@ -261,7 +164,7 @@ class LoadingBody extends StatelessWidget {
                                       },
                                     ),
                                   ],
-                                )
+                                ),
                               ],
                             ),
                           ),

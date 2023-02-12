@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -9,16 +11,17 @@ import 'package:movie_db/model/movie_detail.dart';
 import 'package:movie_db/model/screen_shot.dart';
 import 'package:movie_db/service/api_service.dart';
 import 'package:movie_db/service/auth_service.dart';
+import 'package:movie_db/widget/like_widget.dart';
 import 'package:movie_db/widget/star_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../bloc/movie_detail_bloc/movie_detail_bloc.dart';
 import '../bloc/movie_detail_bloc/movie_detail_event.dart';
 import '../bloc/movie_detail_bloc/movie_detail_state.dart';
+import 'pop_up.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   final Movie movie;
-
   const MovieDetailScreen({super.key, required this.movie});
   static const String routeName = '/movieDetailScreen';
 
@@ -39,6 +42,7 @@ class MovieDetailScreen extends StatelessWidget {
 
   Widget _buildDetailBody(BuildContext context) {
     var colorLike = Colors.black54;
+    final serviceLike = AuthService();
 
     return BlocBuilder<MovieDetailBloc, MovieDetailState>(
       builder: (context, state) {
@@ -82,7 +86,7 @@ class MovieDetailScreen extends StatelessWidget {
                     elevation: 0,
                   ),
                   Container(
-                    padding: const EdgeInsets.only(top: 180),
+                    padding: const EdgeInsets.only(top: 90),
                     child: GestureDetector(
                       onTap: () async {
                         final youtubeUrl =
@@ -117,24 +121,12 @@ class MovieDetailScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 5,
                   ),
                   Row(
                     children: <Widget>[
                       Expanded(
-                        child: GestureDetector(
-                          onTap: () async {
-                            final serviceLike = AuthService();
-                            log('click');
-                            colorLike = Colors.red;
-
-                            serviceLike.likePost(movieDetail.id);
-                          },
-                          child: Icon(
-                            Icons.favorite_outline_rounded,
-                            color: colorLike,
-                          ),
-                        ),
+                        child: PostWidget(postId: movieDetail.id),
                       ),
                       Expanded(
                         child: StarWidget(
@@ -183,7 +175,7 @@ class MovieDetailScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(
-                            height: 10,
+                            height: 5,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -280,7 +272,7 @@ class MovieDetailScreen extends StatelessWidget {
                                     ),
                           ),
                           Container(
-                            height: 120,
+                            height: 110,
                             child: ListView.separated(
                               separatorBuilder: (context, index) =>
                                   const VerticalDivider(
@@ -315,7 +307,7 @@ class MovieDetailScreen extends StatelessWidget {
                               },
                             ),
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 5),
                           Text(
                             'Casts'.toUpperCase(),
                             style:
@@ -344,85 +336,97 @@ class MovieDetailScreen extends StatelessWidget {
                                             BorderRadius.circular(100),
                                       ),
                                       elevation: 3,
-                                      child: ClipRRect(
-                                        child: cast.profilePath.isEmpty
-                                            ? Container(
-                                                width: 80,
-                                                height: 80,
-                                                decoration: const BoxDecoration(
-                                                  image: DecorationImage(
-                                                    image: AssetImage(
-                                                        'assets/images/person_icon-icons.com_50075.png'),
-                                                  ),
-                                                ),
-                                              )
-                                            : CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://image.tmdb.org/t/p/w200${cast.profilePath}',
-                                                imageBuilder:
-                                                    (context, imageBuilder) {
-                                                  return Container(
+                                      child: Stack(
+                                        children: [
+                                          ClipRRect(
+                                            child: cast.profilePath.isEmpty
+                                                ? Container(
                                                     width: 80,
                                                     height: 80,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                                  .all(
-                                                              Radius.circular(
-                                                                  100)),
+                                                    decoration:
+                                                        const BoxDecoration(
                                                       image: DecorationImage(
-                                                        image: imageBuilder,
-                                                        fit: BoxFit.cover,
+                                                        image: AssetImage(
+                                                            'assets/images/person_icon-icons.com_50075.png'),
                                                       ),
                                                     ),
-                                                  );
-                                                },
-                                                placeholder: (context, url) =>
-                                                    const SizedBox(
-                                                  width: 80,
-                                                  height: 80,
-                                                  child: Center(
-                                                    child:
-                                                        CircularProgressIndicator(),
-                                                  ),
-                                                ),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        Container(
-                                                  width: 80,
-                                                  height: 80,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    image: DecorationImage(
-                                                      image: AssetImage(
-                                                          'assets/images/not_found.png'),
+                                                  )
+                                                : CachedNetworkImage(
+                                                    imageUrl:
+                                                        'https://image.tmdb.org/t/p/w200${cast.profilePath}',
+                                                    imageBuilder: (context,
+                                                        imageBuilder) {
+                                                      return Container(
+                                                        width: 80,
+                                                        height: 80,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                      .all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          100)),
+                                                          image:
+                                                              DecorationImage(
+                                                            image: imageBuilder,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                    placeholder:
+                                                        (context, url) =>
+                                                            const SizedBox(
+                                                      width: 80,
+                                                      height: 80,
+                                                      child: Center(
+                                                        child:
+                                                            CircularProgressIndicator(),
+                                                      ),
+                                                    ),
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            Container(
+                                                      width: 80,
+                                                      height: 80,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        image: DecorationImage(
+                                                          image: AssetImage(
+                                                              'assets/images/not_found.png'),
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: PopUp(
+                                              title: cast.name,
+                                              content: cast.character,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    Container(
-                                      child: Center(
-                                        child: Text(
-                                          cast.name.toUpperCase(),
-                                          style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 8,
-                                            fontFamily: 'muli',
-                                          ),
+                                    Center(
+                                      child: Text(
+                                        cast.name.toUpperCase(),
+                                        style: const TextStyle(
+                                          color: Colors.black54,
+                                          fontSize: 8,
+                                          fontFamily: 'muli',
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      child: Center(
-                                        child: Text(
-                                          cast.character.toUpperCase(),
-                                          style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 8,
-                                            fontFamily: 'muli',
-                                          ),
+                                    Center(
+                                      child: Text(
+                                        cast.character.toUpperCase(),
+                                        style: const TextStyle(
+                                          color: Colors.black54,
+                                          fontSize: 8,
+                                          fontFamily: 'muli',
                                         ),
                                       ),
                                     ),
@@ -444,9 +448,5 @@ class MovieDetailScreen extends StatelessWidget {
         }
       },
     );
-  }
-
-  void _goBack(BuildContext context) {
-    Navigator.of(context).pop();
   }
 }

@@ -108,8 +108,9 @@ class ApiService {
           '${Environment.baseUrl}/movie/${movieId}/credits?${Environment.apiKey}');
 
       var listCast = response.data['cast'] as List;
+      print(listCast);
       List<Cast> castList = listCast.map((p) => Cast.fromJson(p)).toList();
-      // print(castList.length);
+      // print(castList.first.profilePath);
 
       return castList;
     } catch (error, stacktrace) {
